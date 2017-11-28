@@ -1,0 +1,292 @@
+<!doctype html>
+<html>
+<head>
+<title>
+Universal Hot Stoppers
+</title>
+<style>
+.box{
+border:1px black solid;
+float:left;
+width:33%;
+height:90vh;
+display:block;
+text-align:center;
+
+}
+button{
+margin:5px;
+}
+</style>
+</head>
+<body>
+<h1>
+Universal Hot Stoppers- By <a href="https://zakerytclarke.github.io">Zakery Clarke</a> for <a href="http://www.hellointernet.fm/podcast/92">Hello Internet</a>
+</h1>
+
+<div id="b1" class="box">
+<h1>
+<u>
+Production:
+</u>
+<h2 id="b">
+Bank Account: $5.00
+</h2>
+</h1>
+<button onclick="createhot()">
+Make Hot Stopper
+</button>
+<br>
+<h2 id="i">
+Inventory: 0 hot stoppers
+</h2>
+<button onclick="rp()">
+Raise Price
+</button>
+<h2 id="p">
+Price: $0.10
+</h2>
+<button onclick="lp()">
+Lower Price
+</button>
+<br>
+<h2 id="pl">
+Plastic: 0 lbs
+</h2>
+<button onclick="bp()">
+Buy Plastic: $5
+</button>
+</div>
+<div id="b2" class="box">
+<h1>
+<u>
+Store:
+</u>
+</h1>
+<button id="p0" onclick="buy(0,10)" style="display:inline;">
+Buy Auto-Molder: $10
+</button>
+<br>
+<button id="p1" onclick="buy(1,50)" style="display:none;">
+Youtube Ad $50
+</button>
+<br>
+<button id="p2" onclick="buy(2,100)" style="display:none;">
+Buy Plastic Factory: $100
+</button>
+<br>
+<button id="p3" onclick="buy(3,100)" style="display:none;">
+Reddit Ad: $100
+</button>
+<br>
+<button id="p4" onclick="buy(4,300)" style="display:none;">
+Create a Brand Mascot: $300
+</button>
+<br>
+<button id="p5" onclick="buy(5,1000)" style="display:none;">
+Buy Starbucks Endorsement: $1,000
+</button>
+<br>
+<button id="p6" onclick="buy(6,10000)" style="display:none;">
+Buy Nuke: $10,000
+</button>
+<br>
+<button id="p7" onclick="buy(7,1000000)" style="display:none;">
+Buy Country: $1,000,000
+</button>
+<br>
+<button id="p8" onclick="buy(8,1000000000)" style="display:none;">
+Buy World: $1,000,000,000
+</button>
+<br>
+<button id="p9" onclick="buy(9,10000000000)" style="display:none;">
+Colonize Mars: $10,000,000,000
+</button>
+<br>
+</div>
+
+<div id="b3" class="box">
+<h1>
+<u>
+Stats:
+</u>
+</h1>
+<h2 id="d">
+Demand: 30%
+</h2>
+<h2 id="t">
+Time:
+</h2>
+<h2 id="a">
+Auto-Molders: 0
+</h2>
+<h2 id="pf">
+Plastic Factories: 0
+</h2>
+</div>
+<img id="win" src="win.png" style="width:100%;position:absolute;top:0;left:0;display:none;">
+<script>
+var a=0;//number of auto molders
+var d=0;//increase in demand
+var i=0;//inventory
+var b=50;//bank
+var p=0.3;//price
+var pl=0.5;// plastic 
+var pf=0;//plastic factories
+var h=0;//total number of hotstoppers
+var t = Date.now();
+setInterval(updatehot,1000);
+hotout();
+
+ 
+
+function updatehot(){
+	pl=this.pl;	
+	pf=this.pf;
+	pl=pl+0.5*Math.round(Math.random()*pf);
+	var temp=Math.round(Math.random()*a);
+	//alert(pl);
+	while(pl*10<temp){
+		temp--;
+	}
+	i=i+temp;
+	pl=pl-temp*0.1;
+	if(i>0){
+		var c=0;
+		var tmp=Math.round(Math.random()*demand());
+		while(i>0&&c<tmp){
+			i--;
+			c++;
+	}
+	b=b+c*p;
+	hotout();
+	}
+hotout();
+}
+
+function hotout(){
+	document.getElementById("i").innerHTML="Inventory: "+i;
+	document.getElementById("p").innerHTML="Price: $"+p.toFixed(2);
+	document.getElementById("pl").innerHTML="Plastic: "+this.pl.toFixed(2)+" lbs";
+	document.getElementById("b").innerHTML="Bank: $"+b.toFixed(2);
+	document.getElementById("d").innerHTML="Demand: "+demand().toFixed(0)+"%";
+	document.getElementById("a").innerHTML="Auto-Molders: "+a;
+	document.getElementById("t").innerHTML="Time: "+(((Date.now()-t)/60000).toFixed(3))+" min";
+	document.getElementById(pf").innerHTML="Factories: "+pf;
+}
+function demand(){
+	var a=(100/(Math.pow(100*p,2)/100)+d);
+	if(a<1){
+		a=1;
+	}
+	if(a>100){
+		a=100;
+	}
+	return a
+}
+function bp(){
+	if(b>=5){
+		b=b-5;
+		pl=pl+5;
+		hotout();
+	}else{
+		alert("Insufficient Funds");
+	}
+}
+function rp(){
+	if(p<0.95){
+		p=p+0.1;
+	} 
+	hotout();
+}
+function lp(){
+	if(p>0.15){
+		p=p-0.1;
+	}
+	hotout();
+}
+function createhot(){
+	if(pl>0.05){
+		i++;
+		pl=pl-0.1;
+		hotout();
+	}
+}
+
+function buy(item,price){
+if(b>=price){
+b=b-price;
+	switch(item){
+		case 0:
+			alert("An Auto-Molder has been created. Production Increased.");
+			a++;
+			document.getElementById("p1").style.display="inline";
+			document.getElementById("p2").style.display="inline";
+		break;
+		case 1:
+			alert("Youtube Ads have increased the popularity of your hot stoppers. Demand Increases.");
+			d=d+5;
+			document.getElementById("p3").style.display="inline";
+			document.getElementById("p1").disabled = true;
+		break;
+		case 2:
+			if(pf==0){
+				alert("You are now producing plastic.");
+			}else{
+				alert("You have created another plastic factory.");
+			}
+			pf++;
+			document.getElementById("p3").style.display="inline";
+			document.getElementById("p4").style.display="inline";
+		break;
+		case 3:
+			alert("The Reddit community volunteers to help you manufacture more hot stoppers. Production Increases.");
+			a=a+100;
+			document.getElementById("p3").disabled = true;
+			document.getElementById("p4").style.display="inline";
+			document.getElementById("p5").style.display="inline";
+		break;
+		case 4:
+			alert("A female African Grey Penguin at the Bristol Zoo becomes your brand's mascot. Demand Increases.");
+			d=d+10;
+			document.getElementById("p4").disabled = true;
+			document.getElementById("p5").style.display="inline";
+		break;
+		case 5:
+			alert("Starbucks now officialy carries your hot stoppers in their stores. Demand Increases.");
+			d=d+15;
+			document.getElementById("p5").disabled = true;
+			document.getElementById("p6").style.display="inline";		
+		break;
+		case 6:
+			alert("You have purchased a Nuke. Out of Fear the citizens of the world buy more hot stoppers to appease you. Demand Increases.");
+			d=d+20;
+			document.getElementById("p6").disabled = true;
+			document.getElementById("p7").style.display="inline";
+		break;
+		case 7:
+			alert("You purchase the country of Greece in order to start your Grey Empire. All resources have been dedicated to hot stopper production. Production Increases.");
+			a=a+price;
+			document.getElementById("p7").disabled = true;
+			document.getElementById("p8").style.display="inline";
+		break;
+		case 8:
+			alert("The World is now controlled by Grey Industries. All 7 billion people have been forced into indentured servitude in order to produce hot stoppers. Make sure to rule wisely. Production Increases.");
+			a=a+price;
+			document.getElementById("p8").disabled = true;
+			document.getElementById("p9").style.display="inline";
+		break;
+		case 9:
+			document.getElementById("win").style.display="block";
+			document.getElementById("b1").style.display="none";
+			document.getElementById("b2").style.display="none";
+			document.getElementById("b3").style.display="none";
+			alert("Congratulations Tim!\nYou have colonized Mars for the Great Hello Internet Community. You have earned the HI Medal of Honor.");
+	}
+}else{
+alert("Insufficient Funds");
+}
+}
+</script>
+</body>
+</html>
