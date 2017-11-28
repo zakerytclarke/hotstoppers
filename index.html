@@ -171,8 +171,8 @@ function hotout(){
 	document.getElementById("b").innerHTML="Bank: $"+b.toFixed(2);
 	document.getElementById("d").innerHTML="Demand: "+demand().toFixed(0)+"%";
 	document.getElementById("a").innerHTML="Auto-Molders: "+a;
-	document.getElementById("t").innerHTML="Time: "+(((Date.now()-t)/60000).toFixed(3))+" min";
-	document.getElementById(pf").innerHTML="Factories: "+pf;
+	document.getElementById("t").innerHTML="Time: "+(((Date.now()-t)/60000).toFixed(2))+" min";
+	document.getElementById("pf").innerHTML="Factories: "+pf;
 }
 function demand(){
 	var a=(100/(Math.pow(100*p,2)/100)+d);
